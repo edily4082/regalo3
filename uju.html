@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Para ti ❤️</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #050505;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .racing-font {
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .gold {
+            color: #f5c542;
+        }
+
+        .red {
+            color: #ff1e1e;
+        }
+
+        .gold-bg {
+            background: #f5c542;
+        }
+
+        .photo-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #111;
+        }
+
+        .photo-container img {
+            transition: all 0.7s ease;
+        }
+
+        .photo-blur {
+            filter: blur(18px);
+            transform: scale(1.1);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.45);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-overlay:hover {
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .photo-overlay i {
+            font-size: 40px;
+            color: #f5c542;
+        }
+
+        .heart {
+            position: fixed;
+            color: #1e90ff;
+            font-size: 20px;
+            animation: floatHeart 7s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            background: linear-gradient(145deg, #111, #080808);
+            border: 1px solid rgba(245, 197, 66, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(245, 197, 66, 0.7);
+            box-shadow: 0 10px 35px rgba(245, 197, 66, 0.12);
+        }
+
+        .gold-line {
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #f5c542,
+                transparent
+            );
+        }
+
+        .btn-gold {
+            background: #f5c542;
+            color: #050505;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            background: #ffd95c;
+            transform: scale(1.03);
+        }
+
+        .counter-box {
+            background: #0d0d0d;
+            border: 1px solid rgba(245, 197, 66, 0.25);
+            border-radius: 12px;
+            padding: 15px 10px;
+            min-width: 70px;
+        }
+
+        .gift-box {
+            border: 2px solid #f5c542;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #181818, #080808);
+        }
+
+        .hidden-message {
+            display: none;
+        }
+
+        .show-message {
+            display: block;
+        }
+
+        @media (max-width: 640px) {
+            .counter-box {
+                min-width: 60px;
+                padding: 10px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CORAZONES -->
+    <div class="heart" style="left: 8%; animation-delay: 0s;">
+        <i class="fa-solid fa-heart"></i>
+    </div>
+
+    <div class="heart" style="left: 25%; animation-delay: 2s;">
+        <i class="fa-solid fa-heart"></i>
+    </div>
+
+    <div class="heart" style="left: 45%; animation-delay: 4s;">
+        <i class="fa-solid fa-heart"></i>
+    </div>
+
+    <div class="heart" style="left: 70%; animation-delay: 1s;">
+        <i class="fa-solid fa-heart"></i>
+    </div>
+
+    <div class="heart" style="left: 90%; animation-delay: 3s;">
+        <i class="fa-solid fa-heart"></i>
+    </div>
+
+
+    <!-- HEADER -->
+    <header class="min-h-screen flex items-center justify-center px-6 py-16">
+
+        <div class="max-w-5xl w-full text-center">
+
+            <p class="gold tracking-[0.4em] uppercase text-sm mb-4">
+                Una pequeña sorpresa para ti
+            </p>
+
+            <h1 class="racing-font text-7xl md:text-9xl leading-none">
+                MI <span class="red">PILOTO</span>
+            </h1>
+
+            <div class="gold-line max-w-md mx-auto my-6"></div>
+
+            <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                Porque hay personas que llegan a nuestra vida y hacen que
+                cada día se sienta como una carrera que vale la pena correr y vivir.
+            </p>
+
+            <div class="mt-10">
+                <i class="fa-solid fa-car-side text-5xl gold"></i>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- PILOTO -->
+    <section class="max-w-6xl mx-auto px-6 py-16">
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+
+            <div class="photo-container h-[450px]">
+
+                <!-- FOTO 3 -->
+                <img
+                    id="driver-img"
+                    <img id="img-3" src="foto3.jpeg" class="w-full h-full object-cover">
+
+                    alt="Nuestro piloto"
+                    class="w-full h-full object-cover"
+                >
+
+            </div>
+
+            <div>
+
+                <p class="red uppercase tracking-[0.3em] text-sm mb-3">
+                    Mi persona favorita
+                </p>
+
+                <h2 class="racing-font text-5xl md:text-6xl mb-6">
+                    EL MEJOR <span class="gold">PILOTO</span>
+                </h2>
+
+                <p class="text-gray-300 leading-relaxed mb-6">
+                    No importa qué tan rápido avance el tiempo,
+                    siempre voy a guardar cada momento contigo.
+                    Gracias por ser esa persona que hace que
+                    los días normales se sientan especiales.
+                    Y que cada segundo se sienta eterno, llevamos poco tiempo juntos pero cada segundo a sido especial y me hace sentir que cada segundo contigo es un regalo.
+                </p>
+
+                <p class="text-gray-400 leading-relaxed">
+                    Y si la vida fuera una carrera, elegiría recorrer
+                    el camino contigo una y otra vez hasta que lleguemos a la megta.
+                </p>
+
+                <div class="mt-8">
+                    <span class="gold text-3xl">♥</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTADOR -->
+    <section class="py-16 bg-[#080808]">
+
+        <div class="max-w-5xl mx-auto px-6 text-center">
+
+            <p class="gold uppercase tracking-[0.3em] text-sm mb-3">
+                Nuestro tiempo
+            </p>
+
+            <h2 class="racing-font text-5xl md:text-6xl mb-10">
+                CADA SEGUNDO <span class="red">CUENTA</span>
+            </h2>
+
+            <div class="flex justify-center gap-3 md:gap-5 flex-wrap">
+
+                <div class="counter-box">
+                    <div id="months" class="text-3xl md:text-4xl gold font-bold">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Meses</div>
+                </div>
+
+                <div class="counter-box">
+                    <div id="days" class="text-3xl md:text-4xl gold font-bold">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Días</div>
+                </div>
+
+                <div class="counter-box">
+                    <div id="hours" class="text-3xl md:text-4xl gold font-bold">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Horas</div>
+                </div>
+
+                <div class="counter-box">
+                    <div id="minutes" class="text-3xl md:text-4xl gold font-bold">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Minutos</div>
+                </div>
+
+                <div class="counter-box">
+                    <div id="seconds" class="text-3xl md:text-4xl gold font-bold">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Segundos</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- GALERÍA -->
+    <section class="max-w-6xl mx-auto px-6 py-20">
+
+        <div class="text-center mb-12">
+
+            <p class="red uppercase tracking-[0.3em] text-sm mb-3">
+                Nuestros recuerdos
+            </p>
+
+            <h2 class="racing-font text-5xl md:text-6xl">
+                MOMENTOS <span class="gold">ÚNICOS</span>
+            </h2>
+
+            <p class="text-gray-400 mt-4">
+                Haz clic en cada foto para descubrirla.
+            </p>
+
+        </div>
+
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+
+            <!-- FOTO 1 -->
+            <div class="card rounded-2xl p-3">
+
+                <div class="photo-container h-80">
+
+                    <img
+                        id="img-1"
+                        <img id="img-1" src="foto1.jpeg" class="w-full h-full object-cover">
+                        alt="Recuerdo 1"
+                        class="w-full h-full object-cover photo-blur"
+                    >
+
+                    <div
+                        class="photo-overlay"
+                        id="overlay-1"
+                        onclick="revealPhoto(1, 'Cada momento contigo vale muchísimo, y mas cuando se que viene a pasar tgiempo conmigo y esta cansado❤️')"
+                    >
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                </div>
+
+                <div class="p-4 text-center">
+                    <p class="gold font-semibold">
+                        RECUERDO #01
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FOTO 2 -->
+            <div class="card rounded-2xl p-3">
+
+                <div class="photo-container h-80">
+
+                    <img
+                        id="img-2"
+                        <img id="img-2" src="foto2.jpeg" class="w-full h-full object-cover">
+                        alt="Recuerdo 2"
+                        class="w-full h-full object-cover photo-blur"
+                    >
+
+                    <div
+                        class="photo-overlay"
+                        id="overlay-2"
+                        onclick="revealPhoto(2, 'Contigo cualquier lugar se convierte en un buen recuerdo y mas si escucho tu risa y siento tus abrazos❤️')"
+                    >
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                </div>
+
+                <div class="p-4 text-center">
+                    <p class="gold font-semibold">
+                        RECUERDO #02
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FOTO 3 -->
+            <div class="card rounded-2xl p-3">
+
+                <div class="photo-container h-80">
+
+                    <img
+                        id="img-3"
+                        <img id="img-4" src="foto5.jpeg" class="w-full h-full object-cover">
+                        alt="Recuerdo 3"
+                        class="w-full h-full object-cover photo-blur"
+                    >
+
+                    <div
+                        class="photo-overlay"
+                        id="overlay-3"
+                        onclick="revealPhoto(3, 'Me encanta compartir momentos contigo y seguir cosechando recuerdos ❤️')"
+                    >
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                </div>
+
+                <div class="p-4 text-center">
+                    <p class="gold font-semibold">
+                        RECUERDO #03
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FOTO 4 -->
+            <div class="card rounded-2xl p-3">
+
+                <div class="photo-container h-80">
+
+                    <img
+                        id="img-4"
+                        <img id="img-5" src="foto6.jpeg" class="w-full h-full object-cover">
+                        alt="Recuerdo 4"
+                        class="w-full h-full object-cover photo-blur"
+                    >
+
+                    <div
+                        class="photo-overlay"
+                        id="overlay-4"
+                        onclick="revealPhoto(4, 'Espero que podamos crear muchos recuerdos más ❤️')"
+                    >
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                </div>
+
+                <div class="p-4 text-center">
+                    <p class="gold font-semibold">
+                        RECUERDO #04
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FOTO 5 -->
+            <div class="card rounded-2xl p-3">
+
+                <div class="photo-container h-80">
+
+                    <img
+                        id="img-5"
+                        src="foto4.jpeg"
+                        alt="Recuerdo 5"
+                        class="w-full h-full object-cover photo-blur"
+                    >
+
+                    <div
+                        class="photo-overlay"
+                        id="overlay-5"
+                        onclick="revealPhoto(5, 'Gracias por formar parte de mi vida ❤️')"
+                    >
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                </div>
+
+                <div class="p-4 text-center">
+                    <p class="gold font-semibold">
+                        RECUERDO #05
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FOTO 6 -->
+            <div class="card rounded-2xl p-3">
+
+                <div class="photo-container h-80">
+
+                    <img
+                        id="img-6"
+                        src="foto7.jpeg"
+                        alt="Recuerdo 6"
+                        class="w-full h-full object-cover photo-blur"
+                    >
+
+                    <div
+                        class="photo-overlay"
+                        id="overlay-6"
+                        onclick="revealPhoto(6, 'Por muchos kilómetros más juntos ❤️')"
+                    >
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                </div>
+
+                <div class="p-4 text-center">
+                    <p class="gold font-semibold">
+                        RECUERDO #06
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="text-center mt-10">
+
+            <button
+                onclick="revealAllPhotos()"
+                class="btn-gold px-8 py-4 rounded-full font-bold uppercase tracking-wider"
+            >
+                <i class="fa-solid fa-images mr-2"></i>
+                Mostrar todas las fotos
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- MENSAJE -->
+    <section class="py-20 bg-[#080808]">
+
+        <div class="max-w-4xl mx-auto px-6 text-center">
+
+            <i class="fa-solid fa-quote-left gold text-4xl mb-6"></i>
+
+            <p class="text-xl md:text-3xl text-gray-200 leading-relaxed">
+                "No necesito que todos los caminos sean perfectos,
+                solamente quiero seguir recorriéndolos contigo."
+            </p>
+
+            <div class="gold-line max-w-xs mx-auto mt-8"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- REGALO -->
+    <section class="max-w-4xl mx-auto px-6 py-20">
+
+        <div class="gift-box p-8 md:p-12 text-center">
+
+            <i class="fa-solid fa-gift text-5xl red mb-5"></i>
+
+            <h2 class="racing-font text-5xl mb-4">
+                UN PEQUEÑO <span class="gold">REGALO</span>
+            </h2>
+
+            <p class="text-gray-400 mb-8">
+                Presiona el botón para abrirlo.
+            </p>
+
+            <div class="mb-8">
+
+                <div
+                    id="gift-progress"
+                    class="w-full h-3 bg-gray-800 rounded-full overflow-hidden"
+                >
+
+                    <div
+                        id="gift-bar"
+                        class="h-full gold-bg transition-all duration-500"
+                        style="width: 0%"
+                    ></div>
+
+                </div>
+
+                <p class="text-gray-500 text-sm mt-2">
+                    <span id="gift-number">0</span>% desbloqueado
+                </p>
+
+            </div>
+
+
+            <button
+                onclick="openGift()"
+                class="btn-gold px-8 py-4 rounded-full font-bold"
+            >
+                <i class="fa-solid fa-key mr-2"></i>
+                Abrir regalo
+            </button>
+
+
+            <div
+                id="gift-message"
+                class="hidden-message mt-8"
+            >
+
+                <div class="gold-line mb-8"></div>
+
+                <p class="text-2xl md:text-3xl gold font-semibold">
+                    Mi regalo eres tú ❤️
+                </p>
+
+                <p class="text-gray-300 mt-4 leading-relaxed">
+                    Gracias por cada sonrisa, cada conversación,
+                    cada momento y cada recuerdo.
+                    Espero que sigamos sumando muchos más.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- YOUTUBE -->
+    <section class="text-center py-16">
+
+        <p class="text-gray-400 mb-5">
+            Una canción que me hace pensar en ti
+        </p>
+
+        <a
+            href="https://youtu.be/L2EmaRBEOx0?si=pzy82ZVTgJeXKsht"
+            target="_blank"
+            class="inline-flex items-center gap-3 btn-gold px-7 py-4 rounded-full font-bold"
+        >
+            <i class="fa-brands fa-youtube text-xl"></i>
+            Escuchar canción
+        </a>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800 py-10 text-center">
+
+        <p class="racing-font text-3xl gold">
+            HECHO CON ❤️
+        </p>
+
+        <p class="text-gray-600 text-sm mt-2">
+            Para mi piloto favorito.
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        // MOSTRAR FOTOS
+
+        function revealPhoto(id, message) {
+
+            const image = document.getElementById("img-" + id);
+            const overlay = document.getElementById("overlay-" + id);
+
+            if (image) {
+                image.classList.remove("photo-blur");
+            }
+
+            if (overlay) {
+                overlay.style.display = "none";
+            }
+
+            if (message) {
+                alert(message);
+            }
+        }
+
+
+        function revealAllPhotos() {
+
+            for (let i = 1; i <= 6; i++) {
+
+                const image = document.getElementById("img-" + i);
+                const overlay = document.getElementById("overlay-" + i);
+
+                if (image) {
+                    image.classList.remove("photo-blur");
+                }
+
+                if (overlay) {
+                    overlay.style.display = "none";
+                }
+            }
+
+            lanzarConfeti();
+        }
+
+
+        // CONFETI
+
+        function lanzarConfeti() {
+
+            if (typeof confetti === "function") {
+
+                confetti({
+                    particleCount: 120,
+                    spread: 90,
+                    origin: {
+                        y: 0.6
+                    }
+                });
+
+            }
+        }
+
+
+        // CONTADOR
+
+        const fechaInicio = new Date(
+            new Date().getFullYear(),
+            7,
+            9,
+            0,
+            0,
+            0
+        );
+
+
+        function actualizarContador() {
+
+            const ahora = new Date();
+
+            let diferencia = ahora - fechaInicio;
+
+            if (diferencia < 0) {
+                diferencia = 0;
+            }
+
+            const segundosTotales =
+                Math.floor(diferencia / 1000);
+
+            const minutosTotales =
+                Math.floor(segundosTotales / 60);
+
+            const horasTotales =
+                Math.floor(minutosTotales / 60);
+
+            const diasTotales =
+                Math.floor(horasTotales / 24);
+
+            const meses =
+                Math.floor(diasTotales / 30);
+
+            const dias =
+                diasTotales % 30;
+
+            const horas =
+                horasTotales % 24;
+
+            const minutos =
+                minutosTotales % 60;
+
+            const segundos =
+                segundosTotales % 60;
+
+
+            document.getElementById("months").textContent = meses;
+            document.getElementById("days").textContent = dias;
+            document.getElementById("hours").textContent = horas;
+            document.getElementById("minutes").textContent = minutos;
+            document.getElementById("seconds").textContent = segundos;
+
+        }
+
+
+        actualizarContador();
+
+        setInterval(actualizarContador, 1000);
+
+
+        // REGALO
+
+        let giftProgress = 0;
+
+
+        function openGift() {
+
+            giftProgress += 5;
+
+            if (giftProgress > 100) {
+                giftProgress = 100;
+            }
+
+            document.getElementById("gift-bar").style.width =
+                giftProgress + "%";
+
+            document.getElementById("gift-number").textContent =
+                giftProgress;
+
+
+            if (giftProgress >= 100) {
+
+                document.getElementById("gift-message")
+                    .classList.remove("hidden-message");
+
+                lanzarConfeti();
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
